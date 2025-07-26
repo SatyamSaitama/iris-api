@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    cloud.google.com/neg: '{"ingress":true}'
+  creationTimestamp: "2025-07-26T14:01:17Z"
+  finalizers:
+  - service.kubernetes.io/load-balancer-cleanup
+  - gke.networking.io/l4-netlb-v1
+  labels:
+    app: deployment-1
+  name: deployment-1-service
+  namespace: default
+  resourceVersion: "1753543709430623015"
+  uid: f2985bf7-93c1-4849-91bd-ce38766edece
+spec:
+  allocateLoadBalancerNodePorts: true
+  clusterIP: 34.118.233.252
+  clusterIPs:
+  - 34.118.233.252
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - nodePort: 32695
+    port: 80
+    protocol: TCP
+    targetPort: 8000
+  selector:
+    app: deployment-1
+    app.kubernetes.io/managed-by: cloud-console
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer:
+    ingress:
+    - ip: 35.239.212.225
+      ipMode: VIP

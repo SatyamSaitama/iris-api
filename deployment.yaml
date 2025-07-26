@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    autopilot.gke.io/resource-adjustment: '{"input":{"containers":[{"name":"iris-api-sha256-1"}]},"output":{"containers":[{"limits":{"ephemeral-storage":"1Gi"},"requests":{"cpu":"500m","ephemeral-storage":"1Gi","memory":"2Gi"},"name":"iris-api-sha256-1"}]},"computeClassAtAdmission":"Default","modified":true}'
+    autopilot.gke.io/warden-version: 33.26.0-gke.2
+    deployment.kubernetes.io/revision: "4"
+  creationTimestamp: "2025-07-26T14:00:12Z"
+  generation: 8
+  labels:
+    app: deployment-1
+    app.kubernetes.io/managed-by: cloud-console
+  name: deployment-1
+  namespace: default
+  resourceVersion: "1753543931928383012"
+  uid: 20880f7f-a460-4b8c-b4d0-07f40e60d3a3
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: deployment-1
+      app.kubernetes.io/managed-by: cloud-console
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: deployment-1
+        app.kubernetes.io/managed-by: cloud-console
+    spec:
+      containers:
+      - image: us-central1-docker.pkg.dev/operating-realm-460905-q8/my-repo/iris-api@sha256:7873d52c7e0d59a31da5f830017c3d10da510c4d564c2f27932d5ab35232b86a
+        imagePullPolicy: IfNotPresent
+        name: iris-api-sha256-1
+        ports:
+        - containerPort: 8000
+          protocol: TCP
+        resources:
+          limits:
+            ephemeral-storage: 1Gi
+          requests:
+            cpu: 500m
+            ephemeral-storage: 1Gi
+            memory: 2Gi
+        securityContext:
+          capabilities:
+            drop:
+            - NET_RAW
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      terminationGracePeriodSeconds: 30
+      tolerations:
+      - effect: NoSchedule
+        key: kubernetes.io/arch
+        operator: Equal
+        value: amd64
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2025-07-26T14:00:12Z"
+    lastUpdateTime: "2025-07-26T15:31:00Z"
+    message: ReplicaSet "deployment-1-76cf599d46" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  - lastTransitionTime: "2025-07-26T15:32:11Z"
+    lastUpdateTime: "2025-07-26T15:32:11Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  observedGeneration: 8
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1
